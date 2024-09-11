@@ -31,10 +31,10 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         if(directReports != null) {
             for (Employee element : directReports) {
 
-                // Increment the total number of employees we've hit so far
+                // Increment the total number of employees we've found so far
                 totalNumberReports++ ;
                 
-                // Find the proper employee and add them to the tempReports list
+                // Add the employee object to the temp list
                 tempReports.add( employeeRepository.findByEmployeeId( element.getEmployeeId() ));
                 
             }
@@ -46,7 +46,7 @@ public class ReportingStructureServiceImpl implements ReportingStructureService 
         LOG.debug("Retrieving all reports for employee [{}]", employee.getFirstName()+employee.getLastName());
         employee.setDirectReports(formatDirectReports(employee));
 
-        // Recursively loop through all children of this employee
+        // Recursively loop through all reports of this employee
         for (Employee element : employee.getDirectReports()) {
             getAllReports(element);
         }
